@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classificador de Emails</title>
+    <style>
+        /* estilos gerais */
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* container principal */
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #3366FF;
+            font-size: 24px;
+        }
+
+        form {
+            margin: 20px 0;
+        }
+
+        textarea, input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            background: #3366FF;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #1a4ddb;
+        }
+
+        .resultado {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e6f2ff;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Classificador de Emails</h1>
+
+        <!-- formulario para inserir o texto -->
+        <form action="/process_text" method="POST">
+            <label for="email_text">Insira o texto do email:</label>
+            <textarea name="email_text" id="email_text" rows="6" placeholder="Digite o conteúdo do email..."></textarea>
+            <button type="submit">Classificar</button>
+        </form>
+
+        <hr>
+
+        <!-- formulário para upload do arquivo -->
+        <form action="/process_file" method="POST" enctype="multipart/form-data">
+            <label for="email_file">Selecione um arquivo (.txt ou .pdf):</label>
+            <input type="file" name="email_file" id="email_file" accept=".txt, .pdf">
+            <button type="submit">Fazer Upload e Classificar</button>
+        </form>
+
+        <hr>
+
+        <!-- exibição do resultado da classificação -->
+        {% if category %}
+            <div class="resultado">
+                <h2>Resultado:</h2>
+                <p><strong>Categoria:</strong> {{ category }}</p>
+                <p><strong>Resposta Sugerida:</strong> {{ suggested_reply }}</p>
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
