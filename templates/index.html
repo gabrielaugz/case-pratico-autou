@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Classificador de Emails</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
     <style>
         /* estilos gerais */
         body {
             font-family: Arial, sans-serif;
-            background: #f5f7fa;
+            background: linear-gradient(135deg, #eef2ff, #f5f7fa);
             color: #333;
             text-align: center;
             margin: 0;
             padding: 0;
+            animation: gradientBG 6s infinite alternate;
         }
 
         /* container principal */
@@ -20,14 +23,15 @@
             max-width: 600px;
             margin: 40px auto;
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
-            color: #3366FF;
+            color: #3b82f6;
             font-size: 24px;
+            font-weight: bold;
         }
 
         form {
@@ -36,27 +40,31 @@
 
         textarea, input[type="file"] {
             width: 100%;
-            padding: 10px;
-            margin-top: 5px;
+            padding: 12px;
+            margin-top: 8px;
             border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
+            border-radius: 6px;
+            font-size: 15px;
+            box-sizing: border-box;
+            resize: none; 
         }
 
         button {
-            background: #3366FF;
+            background: linear-gradient(90deg, #3b82f6, #6c63ff);
             color: white;
             border: none;
             padding: 12px;
             width: 100%;
             font-size: 16px;
             cursor: pointer;
-            border-radius: 5px;
-            transition: 0.3s;
+            border-radius: 6px;
+            transition: 0.3s ease-in-out;
+            font-weight: bold;
         }
 
         button:hover {
-            background: #1a4ddb;
+            background: linear-gradient(90deg, #6c63ff, #3b82f6);
+            transform: scale(1.05);
         }
 
         .resultado {
@@ -65,35 +73,63 @@
             background: #e6f2ff;
             border-radius: 5px;
             font-size: 16px;
+            font-weight: bold;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: #d1d5db;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            button {
+                font-size: 14px;
+            }
+        }
+
+        @keyframes gradientBG {
+            0% { background: linear-gradient(120deg, #eef2ff, #dbeafe); }
+            100% { background: linear-gradient(120deg, #e0f2fe, #bfdbfe); }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div class="container shadow-lg">
         <h1>Classificador de Emails</h1>
 
         <!-- formulario para inserir o texto -->
         <form action="/process_text" method="POST">
-            <label for="email_text">Insira o texto do email:</label>
-            <textarea name="email_text" id="email_text" rows="6" placeholder="Digite o conteúdo do email..."></textarea>
-            <button type="submit">Classificar</button>
+            <label for="email_text" class="form-label">Insira o texto do email:</label>
+            <textarea name="email_text" id="email_text" rows="4" class="form-control"></textarea>
+            <button type="submit" class="btn btn-primary w-100 mt-3">Classificar</button>
         </form>
 
         <hr>
 
         <!-- formulário para upload do arquivo -->
         <form action="/process_file" method="POST" enctype="multipart/form-data">
-            <label for="email_file">Selecione um arquivo (.txt ou .pdf):</label>
-            <input type="file" name="email_file" id="email_file" accept=".txt, .pdf">
-            <button type="submit">Fazer Upload e Classificar</button>
+            <label for="email_file" class="form-label">Selecione um arquivo (.txt ou .pdf):</label>
+            <input type="file" name="email_file" id="email_file" class="form-control">
+            <button type="submit" class="btn btn-primary w-100 mt-3">Fazer Upload e Classificar</button>
         </form>
 
         <hr>
 
         <!-- exibição do resultado da classificação -->
         {% if category %}
-            <div class="resultado">
+            <div class="alert alert-info mt-3">
                 <h2>Resultado:</h2>
                 <p><strong>Categoria:</strong> {{ category }}</p>
                 <p><strong>Resposta Sugerida:</strong> {{ suggested_reply }}</p>
