@@ -1,6 +1,8 @@
 # classifier_responder.py
 import openai
 import os
+from models.ml_classifier import classify_email_ml
+from models.ml_reply_generator import generate_reply_ml
 
 # chave da api via var de ambiente
 openai.api_key = os.getenv("OPENAI_API_KEY", "")
@@ -42,16 +44,20 @@ def classify_email(email_text: str) -> str:
 
         classification = response.choices[0].message.content.strip().lower()
 
-        # padrão: ser produtivo
+        # caso OpenAI erre a classificaçao, utiliza-se o modelo de ML
         if classification not in ["produtivo", "improdutivo"]:
-            classification = "Produtivo"
-        
+            print("[INFO] OpenAI classificou de forma incerta. Utilizando ML...")
+            classification = classify_email_ml(email_text)
         
         return classification.capitalize()
 
+    except openai.error.OpenAIError as e:
+        print(f"[ERROR] OpenAI falhou ({e}). Usando Machine Learning tradicional.")
+        return classify_email_ml(email_text)
+
     except Exception as e:
-        print("Erro:", e)
-        return "Erro"
+        print(f"[ERROR] Erro inesperado ({e}). Usando Machine Learning tradicional.")
+        return classify_email_ml(email_text)
 
 def suggest_reply(category: str, email_text: str) -> str:
     """
@@ -85,6 +91,11 @@ def suggest_reply(category: str, email_text: str) -> str:
         )
         answer = response.choices[0].message.content.strip()
         return answer
+    
+    except openai.error.OpenAIError as e:
+        print(f"[ERROR] OpenAI falhou ({e}). Usando Machine Learning tradicional para resposta.")
+        return generate_reply_ml(email_text)
+
     except Exception as e:
-        print("Erro ao chamar OpenAI para geração de resposta:", e)
-        return "Não foi possível gerar resposta."
+        print(f"[ERROR] Erro inesperado ({e}). Usando Machine Learning tradicional para resposta.")
+        return generate_reply_ml(email_text)
