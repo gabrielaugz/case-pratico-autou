@@ -80,7 +80,7 @@ def suggest_reply(category: str, email_text: str) -> str:
                 "Resposta:" 
             )
 
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "Você é um assistente virtual que deve redigir respostas curtas em português."},
