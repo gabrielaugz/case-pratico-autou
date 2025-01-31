@@ -78,6 +78,23 @@ hr {
     margin: 20px 0;
 }
 
+.loading-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+}
+
+.loading-button.loading .button-text {
+    display: none;
+}
+
+.loading-button.loading .spinner-border {
+    display: inline-block !important;
+}
+
+
 @media (max-width: 768px) {
     .container {
         width: 90%;
