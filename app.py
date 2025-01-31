@@ -3,7 +3,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import os
 import PyPDF2 
-from nlp_preprocessor import preprocess_text
 from classifier_reply import classify_email, suggest_reply
 
 app = Flask(__name__)
@@ -44,12 +43,24 @@ def process_file():
     if ext == '.txt':
         email_text = file.read().decode('utf-8', errors='ignore')
     elif ext == '.pdf':
-        pdf_reader = PyPDF2.PdfReader(file)
-        for page_num in range(len(pdf_reader.pages)):
-            page = pdf_reader.pages[page_num]
-            email_text += page.extract_text() + "\n"
+        try:
+            file.seek(0)
+            pdf_reader = PyPDF2.PdfReader(file)
+
+            if not pdf_reader.pages:
+                return render_template('index.html', error="O PDF não contém páginas legíveis.")
+
+            for page in pdf_reader.pages:
+                email_text += page.extract_text() + "\n"
+
+        except PyPDF2.errors.PdfReadError:
+            return render_template('index.html', error="Erro: Arquivo PDF inválido ou corrompido.")
+
+        except Exception as e:
+            return render_template('index.html', error=f"Erro ao processar o PDF: {e}")
+
     else:
-        return redirect(url_for('index'))
+        return render_template('index.html', error="Formato de arquivo não suportado. Envie um arquivo .txt ou .pdf.")
 
     # classificação e geração de resposta
     category = classify_email(email_text)
