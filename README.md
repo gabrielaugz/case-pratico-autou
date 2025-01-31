@@ -10,7 +10,7 @@ O sistema está hospedado no Render:
 
 ## Tecnologias Utilizadas
 
-- **Python 3.11 e Flask (Backend)**
+- **Python 3.11 e Flask** (Backend)
 - **OpenAI API** (Para classificação e resposta automática)
 - **Scikit-learn** (Para modelo de Machine Learning)
 - **Pandas** (Manipulação de dados)
