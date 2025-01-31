@@ -1,0 +1,13 @@
+Email,Categoria,Resposta
+"Olá, poderiam me enviar o relatório financeiro do mês passado?",Produtivo,"Recebemos sua solicitação e estamos processando. Enviaremos o relatório em breve."
+"Obrigado pela ajuda ontem!",Improdutivo,"Agradecemos sua mensagem! Estamos sempre à disposição."
+"Segue em anexo a fatura para conferência.",Produtivo,"Confirmamos o recebimento do documento. Vamos analisar e retornaremos assim que possível."
+"Bom dia, só queria desejar um ótimo final de semana!",Improdutivo,"Muito obrigado! Desejamos um ótimo final de semana para você também."
+"Preciso atualizar o endereço de cobrança da minha conta.",Produtivo,"Entendido! Poderia nos fornecer os novos detalhes para realizarmos a alteração?"
+"O pagamento da fatura de dezembro foi processado?",Produtivo,"Vamos verificar o status do pagamento e retornaremos em breve."
+"Feliz aniversário para toda a equipe!",Improdutivo,"Muito obrigado pelo carinho! Ficamos felizes com sua mensagem."
+"Preciso de suporte técnico para configurar o acesso ao sistema.",Produtivo,"Estamos aqui para ajudar! Poderia detalhar o problema que está enfrentando?"
+"O evento da empresa será na próxima semana, correto?",Produtivo,"Sim! O evento está confirmado para a próxima semana. Se precisar de mais informações, avise-nos."
+"O reembolso do pedido 45678 já foi processado?",Produtivo,"Vamos conferir e lhe retornaremos com uma atualização o mais rápido possível."
+"Gostaria de saber sobre novas oportunidades de parceria.",Produtivo,"Agradecemos o interesse! Nossa equipe comercial analisará sua proposta e entrará em contato."
+"Parabéns pelo ótimo atendimento!",Improdutivo,"Muito obrigado pelo reconhecimento! Estamos sempre à disposição."
