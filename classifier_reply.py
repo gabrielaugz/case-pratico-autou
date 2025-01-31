@@ -5,11 +5,11 @@ from models.ml_classifier import classify_email_ml
 from models.ml_reply_generator import generate_reply_ml
 
 # chave da api via var de ambiente
-openai.api_key = os.getenv("OPENAI_API_KEY", "")
+client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY", ""))
 
 def classify_email(email_text: str) -> str:
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {
@@ -38,7 +38,7 @@ def classify_email(email_text: str) -> str:
                     "content": email_text
                 }
             ],
-            max_tokens=5,
+            max_tokens=120,
             temperature=0
         )
 
@@ -51,7 +51,7 @@ def classify_email(email_text: str) -> str:
         
         return classification.capitalize()
 
-    except openai.error.OpenAIError as e:
+    except openai.OpenAIError as e:
         print(f"[ERROR] OpenAI falhou ({e}). Usando Machine Learning tradicional.")
         return classify_email_ml(email_text)
 
@@ -92,7 +92,7 @@ def suggest_reply(category: str, email_text: str) -> str:
         answer = response.choices[0].message.content.strip()
         return answer
     
-    except openai.error.OpenAIError as e:
+    except openai.OpenAIError as e:
         print(f"[ERROR] OpenAI falhou ({e}). Usando Machine Learning tradicional para resposta.")
         return generate_reply_ml(email_text)
 
