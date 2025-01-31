@@ -1,6 +1,6 @@
 Flask
 PyPDF2
-openai==0.28.0
+openai
 nltk
 gunicorn
 pandas
